@@ -1,0 +1,90 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages-deploy
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash --noprofile --norc -euo pipefail {0}
+
+jobs:
+  build-and-deploy:
+    name: Build and deploy static site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Check types
+        run: npm run typecheck
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Verify static output
+        run: |
+          test -s out/index.html
+          test -s out/example/index.html
+          test -s out/404.html
+          test -f out/.nojekyll
+
+      - name: Check deployment credential
+        env:
+          DEPLOY_TOKEN: ${{ secrets.PAT }}
+        run: |
+          if [ -z "$DEPLOY_TOKEN" ]; then
+            echo "::error::Add the PAT Actions secret with Contents read/write access to thebriancompany/thebriancompany.github.io."
+            exit 1
+          fi
+
+      - name: Checkout target repository
+        uses: actions/checkout@v6
+        with:
+          repository: thebriancompany/thebriancompany.github.io
+          token: ${{ secrets.PAT }}
+          path: deploy-repo
+          ref: main
+
+      - name: Copy static output
+        run: |
+          # Preserve repository settings, workflows, and any custom domain.
+          rsync -av --delete --exclude='.git/' --exclude='.github/' --exclude='CNAME' out/ deploy-repo/
+
+      - name: Commit and push
+        working-directory: deploy-repo
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to deploy."
+          else
+            git commit -m "Deploy web-brian-site: ${SOURCE_SHA}"
+            git push origin main
+          fi
