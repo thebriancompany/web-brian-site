@@ -12,12 +12,11 @@ export default function Home() {
       </section>
       <section id="apps" className="apps">
         <div className="section-heading"><h2>Our apps<span className="count">01</span></h2><p>하나씩, 차근차근 만들어갑니다.</p></div>
-        <Link href="/example/" className="app-card">
-          <div className="app-icon" aria-hidden="true">b.</div>
-          <div><p className="eyebrow">PREVIEW</p><h3>새로운 시작</h3><p>서비스 소개 페이지를 준비하고 있어요.</p></div>
+        <Link href="/briantext/" className="app-card">
+          <div className="app-icon text-icon" aria-hidden="true">Aa</div>
+          <div><p className="eyebrow">TEXT READER</p><h3>BrianText</h3><p>광고 없이, 읽기에만 집중하는 텍스트 뷰어.</p></div>
           <span className="card-arrow" aria-hidden="true">↗</span>
         </Link>
-        <p className="note">현재는 초기 사이트입니다. 앱 소개 및 개인정보처리방침은 서비스별로 추가될 예정입니다.</p>
       </section>
     </>
   );

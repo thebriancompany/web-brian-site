@@ -32,6 +32,7 @@ npm run build
 확인할 주소:
 
 - https://thebriancompany.github.io/
+- https://thebriancompany.github.io/briantext/ (BrianText 서비스 소개)
 - https://thebriancompany.github.io/example/ (경로 직접 접속/새로고침 확인용)
 - https://thebriancompany.github.io/not-a-page/ (404 확인용)
 
@@ -44,7 +45,13 @@ npm run build
 - `app/<서비스명>/support/page.tsx`: 지원 안내 → `/<서비스명>/support/`
 - `app/page.tsx`: 홈의 앱 목록
 
-`example`은 배포 확인용이며 실제 출시 앱이 아닙니다. 앱 등록 시 교체/삭제하세요. 개인정보처리방침은 앱별 수집 항목, 외부 SDK 및 문의처 확인 후 작성해야 하므로 현재 생성하지 않았습니다.
+`example`은 배포 확인용이며 실제 출시 앱이 아닙니다. 앱 등록 시 교체/삭제하세요. 개인정보처리방침은 앱별 수집 항목, 외부 SDK 및 문의처를 확인한 후 작성합니다.
+
+## BrianText
+
+홈의 앱 목록과 `/briantext/`에서 BrianText를 소개합니다. 제공된 App Store 자료를 바탕으로 광고 없는 읽기, 파일 정렬, 검색, 글꼴·색상 설정 및 다크 모드를 안내합니다. 페이지의 읽기 미리보기는 HTML/CSS로 표현한 디자인이며 실제 앱 스크린샷이 아닙니다.
+
+App Store URL은 확인 후 다운로드 링크로 추가해야 합니다. `/briantext/privacy/`에 개인정보처리방침을 제공하며 소개 페이지에서 연결합니다. 앱에서 개인정보를 수집·서버 저장하지 않고 외부 SDK를 사용하지 않는다는 운영자 확인 내용을 반영했습니다. 문의처는 `hogumachu@gmail.com`이며, 직접 보내는 이메일 문의 정보는 앱 내 수집과 구분하여 안내합니다. 지원 페이지는 추후 추가합니다.
 
 ## 초기 환경 검증 상태
 
